@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northside Strength Gym</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { cobalt:'#2a3bff', iron:'#15171c', chalk:'#f3f4f7', volt:'#ffe45e' },
+  fontFamily: { display:['"Big Shoulders Display"','Impact','sans-serif'], body:['Archivo','system-ui','sans-serif'] }
+}}};
+</script>
+<style>
+html { scroll-behavior:smooth; scroll-padding-top:72px; }
+body { font-family:Archivo,system-ui,sans-serif; background:#f3f4f7; color:#15171c; }
+h1,h2,h3,.font-display { font-family:'Big Shoulders Display',Impact,sans-serif; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline:3px solid #ffe45e; outline-offset:3px; }
+
+/* hero: words slide up out of a mask */
+.mask { display:block; overflow:hidden; }
+.mask > span { display:block; transform:translateY(110%); animation:up 1s cubic-bezier(.2,.8,.2,1) forwards; }
+.mask:nth-child(2) > span { animation-delay:.12s } .mask:nth-child(3) > span { animation-delay:.24s }
+@keyframes up { to { transform:none } }
+.fade-in { opacity:0; animation:fade .9s ease .7s forwards; }
+@keyframes fade { to { opacity:1 } }
+.outline-text { -webkit-text-stroke:2px #fff; color:transparent; }
+
+/* marquee */
+.marquee { display:flex; width:max-content; animation:slide 28s linear infinite; }
+.marquee.rev { animation-direction:reverse; animation-duration:36s; }
+@keyframes slide { to { transform:translateX(-50%) } }
+
+/* scroll reveal */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity:1; transform:none; }
+
+.card { transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 18px 0 -6px #2a3bff; }
+.tab[aria-selected="true"] { background:#15171c; color:#fff; }
+.panel { animation:fade .4s ease forwards; opacity:0; }
+.pulse-dot { animation:pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{ box-shadow:0 0 0 0 rgba(255,228,94,.7) } 50%{ box-shadow:0 0 0 10px rgba(255,228,94,0) } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto }
+  .mask > span, .fade-in, .panel { animation:none; transform:none; opacity:1 }
+  .marquee, .pulse-dot { animation:none }
+  .reveal { opacity:1; transform:none; transition:none }
+}
+</style>
+</head>
+<body>
+
+<header id="nav" class="fixed inset-x-0 top-0 z-50 text-white transition-colors duration-300">
+  <div class="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5">
+    <a href="#top" class="font-display text-3xl font-black tracking-wide">NORTHSIDE</a>
+    <nav class="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Main">
+      <a class="hover:text-volt" href="#programs">Programs</a>
+      <a class="hover:text-volt" href="#schedule">Schedule</a>
+      <a class="hover:text-volt" href="#pricing">Pricing</a>
+      <a class="rounded-full bg-volt px-5 py-2 font-semibold text-iron hover:brightness-105" href="#trial">Book a free week</a>
+    </nav>
+    <button id="menuBtn" class="md:hidden rounded-md border border-white/40 px-3 py-2 text-sm" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
+  </div>
+  <div id="mobileMenu" class="hidden bg-iron px-5 pb-5 md:hidden">
+    <a class="block py-3 border-b border-white/10" href="#programs">Programs</a>
+    <a class="block py-3 border-b border-white/10" href="#schedule">Schedule</a>
+    <a class="block py-3 border-b border-white/10" href="#pricing">Pricing</a>
+    <a class="mt-4 block rounded-full bg-volt py-3 text-center font-semibold text-iron" href="#trial">Book a free week</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-cobalt pt-36 text-white">
+    <div class="mx-auto max-w-6xl px-5">
+      <h1 class="font-display text-[22vw] font-black uppercase leading-[.85] sm:text-[15vw] lg:text-[170px]">
+        <span class="mask"><span>Lift</span></span>
+        <span class="mask"><span class="outline-text">Heavy.</span></span>
+        <span class="mask"><span>Leave lighter.</span></span>
+      </h1>
+      <div class="fade-in mt-8 flex flex-col gap-6 pb-14 md:flex-row md:items-end md:justify-between">
+        <p class="max-w-md text-lg text-white/85">A neighborhood strength gym with coached classes, a full free-weight floor, and no mirrors-and-selfies attitude.</p>
+        <div class="flex items-center gap-4">
+          <a href="#trial" class="rounded-full bg-volt px-7 py-4 font-semibold text-iron hover:brightness-105">Book a free week</a>
+          <span class="flex items-center gap-2 text-sm"><span class="pulse-dot h-3 w-3 rounded-full bg-volt"></span>Open now until 10 p.m.</span>
+        </div>
+      </div>
+    </div>
+    <div class="border-y-2 border-white/25 bg-iron py-4 font-display text-4xl font-black uppercase text-white" aria-hidden="true">
+      <div class="marquee" id="m1"></div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-5 py-16 text-center md:grid-cols-4">
+    <div class="reveal"><div class="font-display text-6xl font-black text-cobalt"><span data-count="24">0</span>/7</div><p class="mt-1 text-sm">Keycard access</p></div>
+    <div class="reveal"><div class="font-display text-6xl font-black text-cobalt"><span data-count="45">0</span></div><p class="mt-1 text-sm">Classes each week</p></div>
+    <div class="reveal"><div class="font-display text-6xl font-black text-cobalt"><span data-count="12">0</span></div><p class="mt-1 text-sm">Certified coaches</p></div>
+    <div class="reveal"><div class="font-display text-6xl font-black text-cobalt"><span data-count="3200">0</span></div><p class="mt-1 text-sm">Members on the floor</p></div>
+  </section>
+
+  <!-- Programs -->
+  <section id="programs" class="bg-iron py-20 text-white md:py-28">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="reveal font-display text-5xl font-black uppercase md:text-7xl">Pick your training</h2>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <article class="card reveal rounded-2xl bg-white p-8 text-iron">
+          <h3 class="text-4xl font-black uppercase">Strength</h3>
+          <p class="mt-3 opacity-80">Squat, press, pull. Coached barbell sessions in groups of eight, with a plan that progresses every week.</p>
+          <p class="mt-6 text-sm font-semibold text-cobalt">Beginner friendly</p>
+        </article>
+        <article class="card reveal rounded-2xl bg-volt p-8 text-iron" style="transition-delay:.1s">
+          <h3 class="text-4xl font-black uppercase">Conditioning</h3>
+          <p class="mt-3 opacity-80">Rowers, sleds, and kettlebells in 40-minute intervals. Scale every workout to your level.</p>
+          <p class="mt-6 text-sm font-semibold">All levels</p>
+        </article>
+        <article class="card reveal rounded-2xl bg-white p-8 text-iron" style="transition-delay:.2s">
+          <h3 class="text-4xl font-black uppercase">Mobility</h3>
+          <p class="mt-3 opacity-80">Slow, focused sessions to fix stiff hips and shoulders so the heavy days feel better.</p>
+          <p class="mt-6 text-sm font-semibold text-cobalt">Recovery day pick</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section id="schedule" class="mx-auto max-w-6xl px-5 py-20 md:py-28">
+    <h2 class="reveal font-display text-5xl font-black uppercase md:text-7xl">This week</h2>
+    <div class="reveal mt-8 flex flex-wrap gap-2" role="tablist" aria-label="Class days" id="tabs"></div>
+    <ul id="panel" class="mt-6 divide-y divide-iron/15 border-y border-iron/15" role="tabpanel"></ul>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="bg-white py-20 md:py-28">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="reveal font-display text-5xl font-black uppercase md:text-7xl">Simple pricing</h2>
+      <p class="reveal mt-3 max-w-md opacity-75">No joining fee. Cancel any time with 30 days' notice.</p>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <div class="card reveal rounded-2xl border-2 border-iron p-8">
+          <h3 class="text-3xl font-black uppercase">Floor</h3>
+          <p class="mt-4 font-display text-6xl font-black">$29<span class="text-xl font-bold">/mo</span></p>
+          <p class="mt-4 text-sm opacity-75">Open gym, 24/7 access, locker room.</p>
+        </div>
+        <div class="card reveal rounded-2xl bg-cobalt p-8 text-white" style="transition-delay:.1s">
+          <h3 class="text-3xl font-black uppercase">Coached</h3>
+          <p class="mt-4 font-display text-6xl font-black">$59<span class="text-xl font-bold">/mo</span></p>
+          <p class="mt-4 text-sm text-white/85">Everything in Floor plus unlimited classes and a starter plan.</p>
+        </div>
+        <div class="card reveal rounded-2xl border-2 border-iron p-8" style="transition-delay:.2s">
+          <h3 class="text-3xl font-black uppercase">Personal</h3>
+          <p class="mt-4 font-display text-6xl font-black">$149<span class="text-xl font-bold">/mo</span></p>
+          <p class="mt-4 text-sm opacity-75">Four one-to-one sessions each month, plus unlimited classes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trial -->
+  <section id="trial" class="bg-volt py-20 md:py-28">
+    <div class="reveal mx-auto max-w-2xl px-5 text-center">
+      <h2 class="font-display text-5xl font-black uppercase md:text-7xl">Your first week is free</h2>
+      <p class="mt-4">Leave your email and we'll send you a pass and a beginner plan.</p>
+      <form id="trialForm" class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <label class="sr-only" for="email">Email address</label>
+        <input id="email" type="email" required placeholder="you@example.com" class="flex-1 rounded-full border-2 border-iron bg-white px-5 py-4">
+        <button class="rounded-full bg-iron px-7 py-4 font-semibold text-white hover:bg-cobalt" type="submit">Get my pass</button>
+      </form>
+      <p id="formMsg" class="mt-4 min-h-[1.5rem] font-medium" role="status"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-iron px-5 py-10 text-center text-sm text-white/70">
+  <p class="font-display text-2xl font-black text-white">NORTHSIDE</p>
+  <p class="mt-2">Mon–Fri 5:30–22:00 · Sat–Sun 7:00–20:00 · 88 Foundry Street</p>
+  <p class="mt-1">© 2026 Northside Strength Gym</p>
+</footer>
+
+<script>
+// Header turns solid after the hero
+var nav = document.getElementById('nav');
+function onScroll() { nav.classList.toggle('bg-iron', window.scrollY > 40); }
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+// Mobile menu
+var mBtn = document.getElementById('menuBtn'), mMenu = document.getElementById('mobileMenu');
+mBtn.addEventListener('click', function () {
+  var open = mMenu.classList.toggle('hidden') === false;
+  mBtn.setAttribute('aria-expanded', open);
+});
+mMenu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { mMenu.classList.add('hidden'); mBtn.setAttribute('aria-expanded', false); }); });
+
+// Marquee (content duplicated for a seamless loop)
+var words = ['Squat', 'Press', 'Pull', 'Carry', 'Row', 'Recover'];
+var strip = words.map(function (w) { return '<span class="px-6">' + w + '</span><span class="text-volt">✦</span>'; }).join('');
+document.getElementById('m1').innerHTML = strip + strip + strip + strip;
+
+// Scroll reveal + counters
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) {
+    if (!en.isIntersecting) return;
+    en.target.classList.add('in');
+    en.target.querySelectorAll('[data-count]').forEach(count);
+    io.unobserve(en.target);
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+function count(el) {
+  var target = +el.dataset.count, start = null, dur = 1400;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = target.toLocaleString(); return; }
+  function step(t) {
+    if (!start) start = t;
+    var p = Math.min((t - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * e).toLocaleString();
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// Schedule tabs
+var days = {
+  Mon: [['06:00', 'Strength Foundations', 'Coach Ana'], ['12:15', 'Lunch Conditioning', 'Coach Dev'], ['18:30', 'Barbell Club', 'Coach Ana']],
+  Tue: [['06:00', 'Conditioning', 'Coach Dev'], ['17:45', 'Mobility Reset', 'Coach Mei'], ['19:00', 'Strength Foundations', 'Coach Sam']],
+  Wed: [['06:00', 'Barbell Club', 'Coach Ana'], ['12:15', 'Lunch Conditioning', 'Coach Dev'], ['18:30', 'Conditioning', 'Coach Sam']],
+  Thu: [['06:00', 'Strength Foundations', 'Coach Sam'], ['17:45', 'Mobility Reset', 'Coach Mei'], ['19:00', 'Barbell Club', 'Coach Ana']],
+  Fri: [['06:00', 'Conditioning', 'Coach Dev'], ['12:15', 'Lunch Conditioning', 'Coach Dev'], ['17:30', 'Friday Team Workout', 'All coaches']],
+  Sat: [['09:00', 'Team Workout', 'All coaches'], ['10:30', 'Mobility Reset', 'Coach Mei']]
+};
+var tabs = document.getElementById('tabs'), panel = document.getElementById('panel');
+function show(day) {
+  tabs.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.day === day); });
+  panel.innerHTML = days[day].map(function (r) {
+    return '<li class="panel flex items-baseline justify-between gap-4 py-5"><span class="font-display text-3xl font-black text-cobalt">' + r[0] + '</span><span class="flex-1 text-xl font-semibold">' + r[1] + '</span><span class="text-sm opacity-70">' + r[2] + '</span></li>';
+  }).join('');
+}
+Object.keys(days).forEach(function (d) {
+  var b = document.createElement('button');
+  b.className = 'tab rounded-full border-2 border-iron px-5 py-2 font-semibold transition-colors';
+  b.setAttribute('role', 'tab'); b.dataset.day = d; b.textContent = d;
+  b.addEventListener('click', function () { show(d); });
+  tabs.appendChild(b);
+});
+show('Mon');
+
+// Trial form (front-end only: connect to your email service)
+document.getElementById('trialForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  document.getElementById('formMsg').textContent = "You're in. Check your inbox for your pass.";
+  this.reset();
+});
+</script>
+</body>
+</html>
